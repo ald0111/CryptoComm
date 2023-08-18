@@ -12,7 +12,10 @@ class Server {
     const server = this.app.listen(port || 3000);
     server.on("upgrade", (request, socket, head) => {
       this.wsS.handleUpgrade(request, socket, head, (sockConn) => {
-        sockConn.on("message", (message) => console.log(message));
+        sockConn.on("message", (message) => {
+          console.log(message);
+          sockConn.send("hello");
+        });
         this.wsS.emit("connection", socket, request);
       });
     });
