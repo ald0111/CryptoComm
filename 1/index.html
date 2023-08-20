@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Secure Chat</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="chat-container">
+      <div id="chat-box"></div>
+      <input type="text" id="chat-input" placeholder="Type your message..." />
+      <button id="send-button">Send</button>
+    </div>
+    <div id="connect-container">
+      <input
+        type="text"
+        id="connect-input"
+        placeholder="Enter user's unique ID..."
+      />
+      <button id="connect-button">Connect</button>
+    </div>
+    <div id="key-exchange-container">
+      <input
+        type="text"
+        id="target-user-id"
+        placeholder="Enter target user's ID..."
+      />
+      <button id="request-key-exchange">Request Key Exchange</button>
+    </div>
+    <div id="key-availability">
+      <p>Keys available for:</p>
+      <ul id="available-keys-list"></ul>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -2,13 +2,57 @@
 
 <html>
   <head>
+    <!-- import CryptoJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <!-- import JSEncrypt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/2.3.1/jsencrypt.min.js"></script>
     <script type="text/javascript">
+      var ws;
+      var chars =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz*&-%/!?*+=()";
+      // create a key for symmetric encryption
+      // pass in the desired length of your key
+      var generateKey = function generateKey(keyLength) {
+        var randomstring = "";
+
+        for (var i = 0; i < keyLength; i++) {
+          var rnum = Math.floor(Math.random() * chars.length);
+          randomstring += chars.substring(rnum, rnum + 1);
+        }
+        return randomstring;
+      };
+      function encrypt(dataObject, publicKey) {
+        // Create a new encryption key (with a specified length)
+        var key = generateKey(50);
+        // convert data to a json string
+        var dataAsString = JSON.stringify(data);
+        // encrypt the data symmetrically
+        // (the cryptojs library will generate its own 256bit key!!)
+        var aesEncrypted = CryptoJS.AES.encrypt(dataAsString, key);
+        // get the symmetric key and initialization vector from
+        // (hex encoded) and concatenate them into one string
+        var aesKey = aesEncrypted.key + ":::" + aesEncrypted.iv;
+        // the data is base64 encoded
+        var encryptedMessage = aesEncrypted.toString();
+
+        // we create a new JSEncrypt object for rsa encryption
+        var rsaEncrypt = new JSEncrypt();
+
+        // we set the public key (which we passed into the function)
+        rsaEncrypt.setPublicKey(publicKey);
+        // now we encrypt the key & iv with our public key
+        var encryptedKey = rsaEncrypt.encrypt(aesKey);
+        // and concatenate our payload message
+        var payload = encryptedKey + ":::" + encryptedMessage;
+        return payload;
+      }
+        
       function WebSocketTest() {
         if ("WebSocket" in window) {
           alert("WebSocket is supported by your Browser!");
 
           // Let us open a web socket //brower -> server
-          var ws = new WebSocket("ws://localhost:3333/");
+          ws = new WebSocket("ws://localhost:3333/");
 
           //after connect
           ws.onopen = function () {
@@ -34,14 +78,37 @@
           alert("WebSocket NOT supported by your Browser!");
         }
       }
+
+      //store the following multiline string in a variable called 'pubKey'
+var publicKey = "-----BEGIN PUBLIC KEY-----MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAuQC+n7Gk41sQIJqaYfppigTlqCgpk4WJ4RxEn3msKLbz92BDDj7QQHW2WGbsBWj0XI7uI6cZAs2rI/kNgSKJUGgo7ve6R4n958Q8BkjFo8VY047y9MBNXu+thZhdgSIZJbreqG+0LEzlaZn/4fgJp+Pfr/e8gEZn1wUMCNbgDbiEVsOUsXHvig9xF1T+V5fP/zXXXOXhq0yKCRuKN1XYZgnEeM0SeiAcDOvZL09/vQbYPVfBauja6dfFHFz9badOqb1eSIuggJiwCMGeAdcdgi4oNJtc6HTrAOSJJcVjIxkj25Ar3l5VlNAxGfzqEL+CgTpZtwjtW98iZPgnx+Tsl1XlOtubGrW8f96OQMPHaC09PB2XHKSmQblzbSeAFqnjIrOn2gHHStbJDz3l/7ZNN3145uagTscZg0bzSbIHkrij6vyynw8yVvsINc0yPcr2jHZK0i3X+uNmkhYU77QdnVtkAxHL6CjC+buAmSPoKobHDwV5evI8/UOgO/HDsVG0zmuvP3L+hCTreTXtAeoqJjedVbWv4PGExtNUyFbThF/kd30tOpHcxBgqFDC7rUYqo4rRBzI7ttr4Vm/r03UVux6gI6ryk3DAaR2nGscck6AqNko5tNNqZZDo+W8L1IBQp5VEIKbUlM45wSEYiGIcpPHaZi1coH23MHro+svjw10CAwEAAQ==-----END PUBLIC KEY-----";
+
+      
+      //function named runMe that passes the input as a parameter to encrypt function and sends the return value to the server
+      //get the values from input
+      function runMe() {
+        var input = document.getElementById("input").value;
+        //encrypt the input
+        var encrypted = encrypt(input, publicKey);
+        //send the encrypted input to the server
+      //   ws.send(encrypted);
+      console.log(encrypted);
+      }
+
+      document.addEventListener("DOMContentLoaded", ()=>{
+         WebSocketTest();document.getElementById("sse").addEventListener("submit", runMe);
+});
     </script>
   </head>
 
   <body>
     <div id="sse">
-      <a href="javascript:WebSocketTest()">Run WebSocket</a>
+<!--       input box that run the js function 'runMe when submitted' -->
+      <form action="" method="post">
+        <input type="text" id="input" />
+        <input type="submit" />
       <div></div>
       <div></div>
     </div>
+    
   </body>
 </html>

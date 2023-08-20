@@ -18,7 +18,8 @@ class Server {
         sockConn.on("message", (message) => {
           //print every incoming message as text to the console
           try {
-            let msg = console.log(JSON.parse(message));
+            let msg = JSON.parse(message);
+            console.log(msg);
             this.wsS.clients.forEach((client) => {
               if (client !== sockConn && client.readyState === WebSocket.OPEN) {
                 client.send(JSON.stringify(msg));
