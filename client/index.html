@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Secure Chat</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
-</head>
+  </head>
 
-<body>
-    <h1 id="username" style="text-align: center; "></h1>
+  <body>
+    <h1 id="username" style="text-align: center"></h1>
     <div id="main">
-        <div id="hash-container">
-            <h1 style="text-align: center;">HASH</h1>
-            <div id="hash-box"></div>
+      <div id="hash-container">
+        <h1 style="text-align: center">HASH</h1>
+        <div id="hash-box"></div>
+      </div>
+      <div id="chat-container">
+        <h1 style="text-align: center">CHAT</h1>
+        <div id="chat-box">
+          <div class="chat chat-anim">
+            <p class="uname">him</p>
+            <p class="chat-text">hello</p>
+          </div>
         </div>
-        <div id="chat-container">
-            <h1 style="text-align: center;">CHAT</h1>
-            <div id="chat-box"></div>
-            <input type="text" id="chat-input" placeholder="Type your message..." />
-            <button id="send-button">Send</button>
-        </div>
-
+        <input type="text" id="chat-input" placeholder="Type your message..." />
+        <button id="send-button">Send</button>
+      </div>
     </div>
     <div id="key-exchange-container">
-        <input type="text" id="target-user-id" placeholder="Enter target user's ID..." />
-        <button id="request-key-exchange">Request Key Exchange</button>
-        <div id="key-availability">
-            <p>Keys available for:</p>
-            <ul id="available-keys-list"></ul>
-        </div>
+      <input
+        type="text"
+        id="target-user-id"
+        placeholder="Enter target user's ID..."
+      />
+      <button id="request-key-exchange">Request Key Exchange</button>
+      <div id="key-availability">
+        <p>Keys available for:</p>
+        <ul id="available-keys-list"></ul>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
-
+  </body>
 </html>

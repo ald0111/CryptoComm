@@ -72,7 +72,7 @@ socket.addEventListener("message", (event) => {
   } else if (data.type === "encrypted_message" && userKeys[data.uId]) {
     const decryptedMessage = decryptMessage(data.message, userKeys[data.uId]);
     console.log(decryptedMessage);
-    displayMessage(`${data.uId}: ${decryptedMessage}`);
+    displayMessage(data.uId, decryptedMessage);
     displayHashMessage(`${data.uId}: ${data.message}`);
 
     // displayMessage(`${data.senderId}: ${decryptedMessage}`);
@@ -86,7 +86,7 @@ sendButton.addEventListener("click", () => {
   if (message) {
     // const encryptedMessage = encryptMessage(message, myKey);
     const encryptedMessage = CryptoJS.AES.encrypt(message, myKey);
-    displayMessage(`${userUniqueId}: ${message}`);
+    displayMessage(userUniqueId, message);
     displayHashMessage(`${userUniqueId}: ${encryptedMessage.toString()}`);
 
     let mm = JSON.stringify({
@@ -97,6 +97,14 @@ sendButton.addEventListener("click", () => {
     console.log(mm);
     socket.send(mm);
     chatInput.value = "";
+  }
+});
+
+var input = document.getElementById("chat-input");
+input.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    document.getElementById("send-button").click();
   }
 });
 
@@ -138,10 +146,21 @@ function decryptMessage(encryptedData, key) {
   return decryptedMessage.toString(CryptoJS.enc.Utf8);
 }
 
-function displayMessage(message) {
+function displayMessage(userid, message) {
+  const userName = document.createElement("p");
+  userName.textContent = userid;
+  userName.classList.add("uname");
   const messageElement = document.createElement("p");
   messageElement.textContent = message;
-  chatBox.appendChild(messageElement);
+  messageElement.classList.add("chat-text");
+  const chatContainer = document.createElement("div");
+  chatContainer.classList.add("chat");
+  chatContainer.appendChild(userName);
+  chatContainer.appendChild(messageElement);
+  if (userid == userUniqueId) {
+    chatContainer.classList.add("chat-own");
+  }
+  chatBox.appendChild(chatContainer);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 

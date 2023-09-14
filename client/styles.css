@@ -1,81 +1,109 @@
 body {
-    font-family: Arial, sans-serif;
-  }
-  #main {
-    display: flex;
-    flex-direction: row;
-  }
-  #chat-container, #hash-container {
-    /* max-width: 400px; */
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  #chat-box , #hash-box {
-    height: 300px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    width: 30vw;
-    margin-bottom: 10px;
-  }
-  
-  #chat-input, #hash-input {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 5px;
-  }
-  
-  #send-button {
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  #connect-container,
-  #key-exchange-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 20px;
-  }
-  /* Styles for the modal */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+  background-image: url("https://images.pexels.com/photos/2341290/pexels-photo-2341290.jpeg?cs=srgb&dl=pexels-henry-%26-co-2341290.jpg&fm=jpg");
+  font-family: "Roboto";
+  margin: 0;
+}
+#main {
+  display: flex;
+  flex-direction: row;
+}
+#chat-container,
+#hash-container {
+  /* max-width: 400px; */
+  /* background-color: rgb(210, 222, 255); */
+  box-shadow: 3px 3px 10px #333333;
+  margin: 0 auto;
+  padding: 20px;
+  border: 4px solid #ccc;
+  border-radius: 5px;
 }
 
+#chat-box,
+#hash-box {
+  height: 300px;
+  overflow-y: scroll;
+  /* border: 1px solid #ccc; */
+  border-radius: 5px;
+  padding: 10px;
+  width: 30vw;
+  margin-bottom: 10px;
+}
+#hash-box {
+  border: 1px solid #ccc;
+}
+.chat {
+  margin-top: 13px;
+  padding: 15px 10px;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 10px #333333;
+  border-radius: 25px;
+  width: 90%;
+}
+.chat > .chat-text {
+  margin: 0 10px;
+}
+.uname {
+  margin: 0 10px;
+  font-weight: bold;
+  color: #007bff;
+}
+#chat-input,
+#hash-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+#send-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#connect-container,
+#key-exchange-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+/* Styles for the modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.chat-own {
+  background-color: #a1ffd8;
+}
 .modal-content {
-    background-color: white;
-    width: 300px;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  background-color: white;
+  width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 @media only screen and (max-width: 700px) {
   #main {
     flex-direction: column;
   }
-  #chat-box , #hash-box {
+  #chat-box,
+  #hash-box {
     width: 90vw;
   }
 }
