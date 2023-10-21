@@ -13,7 +13,7 @@ const requestKeyExchangeButton = document.getElementById(
 const availableKeysList = document.getElementById("available-keys-list");
 const username = document.getElementById("username");
 
-const userUniqueId = prompt("Enter your unique ID:");
+const userUniqueId = prompt("Enter your Name");
 const userKeys = {}; // Store other users' keys with their unique IDs
 username.innerText = userUniqueId.toUpperCase();
 
